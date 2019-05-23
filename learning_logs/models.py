@@ -10,3 +10,19 @@ class Topic(models.Model):
     def __str__(self):
         """Return a string representation of the model."""
         return self.text
+
+# class Entry inherits from Django's base Model class
+class Entry(models.Model):
+    """Something specific learned about a topic."""
+    # Delete topic also deletes all entries associated with that topic
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    text = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        # Without this Django would call entries 'Entrys'
+        verbose_name_plural = 'entries'
+
+    def __str__(self):
+        """Return a string representation of the model."""
+        return self.text[:50] + "..."
